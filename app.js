@@ -3,7 +3,8 @@ const express = require('express');
 const path = require('node:path');
 const session = require('express-session');
 const pgStore = require('connect-pg-simple')(session);
-const passport = require('./config/passport');
+const passport = require('passport')
+require('./config/passport');
 const indexRouter = require('./routes/index');
 
 const app = express();
