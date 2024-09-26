@@ -11,7 +11,7 @@ router.get('/newMessage',);
 router.get('/memberSecret',);
 router.get('/adminSecret',)
 router.post('/signup', controller.postSignUpPage);
-router.post('/login',);
+router.post('/login', controller.validateLogIn, passport.authenticate('local', { successRedirect: '/', failureRedirect: '/signup' }));
 router.post('/newMessage',);
 router.post('/memberSecret',);
 router.post('/adminSecret',);

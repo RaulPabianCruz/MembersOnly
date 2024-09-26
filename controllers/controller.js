@@ -1,17 +1,18 @@
 const { body, validationResult } = require('express-validator');
 const asyncHandler = require('express-async-handler');
 const passport = require('passport');
+const bcrypt = require('bcryptjs');
 const db = require('../db/queries');
 
 const alphaErr = ' must only consist of letters.';
 const lengthErr = ' must be between 1 and 15 characters long.';
-const validateNewUser = [
+const validateUserInfo = [
     body('firstname').trim()
     .isAlpha().withMessage('First Name' + alphaErr)
     .isLength({min: 1, max: 15}).withMessage('First Name' + lengthErr),
     body('lastname').trim()
     .isAlpha().withMessage('Last Name' + alphaErr)
-    .isLength({min: 1, max: 20}).withMessage('Last Name must be between 1 and 20 characters long.'),
+    .isLength({min: 1, max: 25}).withMessage('Last Name must be between 1 and 25 characters long.'),
     body('username').trim()
     .isAlphanumeric('en-US', { ignore: '[\s-]' }).withMessage('Username must only consist of numbers, letters, spaces, and hyphens.')
     .isLength({min: 1, max: 15}).withMessage('Username' + lengthErr),
@@ -32,17 +33,16 @@ const getSignUpPage = (req, res) => {
     res.render('signupForm', { title: 'Sign Up' });
 }
 
-const getLogInPage = asyncHandler( async (req, res) => {
+const getLogInPage = (req, res) => {
     res.render('loginForm', { title: 'Log In' });
-});
+}
 
 const postSignUpPage = [
-    validateNewUser,
+    validateUserInfo,
     asyncHandler(async (req, res)  => {
         const firstName = req.body.firstname;
         const lastName = req.body.lastname;
         const username = req.body.username;
-        const password = req.body.password;
 
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
@@ -51,9 +51,29 @@ const postSignUpPage = [
                 errors: errors.array()
             });
         }
-        await db.insertUser(firstName, lastName, username, password);
-        res.redirect('/login');
+
+        bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+            if(err)
+                return res.status(400);
+            await db.insertUser(firstName, lastName, username, hashedPassword);
+            res.redirect('/login');
+        });
     })
 ]
 
-module.exports = { getHomePage, getSignUpPage, getLogInPage, postSignUpPage };
+const validateLogIn = [
+    validateUserInfo[2],
+    validateUserInfo[3],
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).render('loginForm', {
+                title: 'Log In',
+                errors: errors.array()
+            });
+        }
+        next();
+    }
+]
+
+module.exports = { getHomePage, getSignUpPage, getLogInPage, postSignUpPage, validateLogIn };
