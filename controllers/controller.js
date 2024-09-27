@@ -49,7 +49,7 @@ const logoutUser = (req, res, next) => {
     });
 }
 
-const postSignUpPage = [
+const postSignUp = [
     validateUserInfo,
     asyncHandler(async (req, res)  => {
         const firstName = req.body.firstname;
@@ -73,7 +73,7 @@ const postSignUpPage = [
     })
 ];
 
-const validateLogIn = [
+const postLogIn = [
     validateUserInfo[2],
     validateUserInfo[3],
     (req, res, next) => {
@@ -85,7 +85,24 @@ const validateLogIn = [
             });
         }
         next();
+    },
+    (req, res, next) => {
+        passport.authenticate('local', (err, user, info) => {
+            if(err)
+                return next(err);
+            if(!user)
+                return res.status(400).render('loginForm', {
+                   title: 'Log In',
+                   errors: [{ msg: info.message }] 
+                });
+
+            req.login(user, (err) => {
+                if(err)
+                    return next(err);
+                return res.redirect('/');
+            });
+        })(req, res, next);
     }
 ];
 
-module.exports = { getHomePage, getSignUpPage, getLogInPage, getProfilePage, logoutUser, postSignUpPage, validateLogIn };
+module.exports = { getHomePage, getSignUpPage, getLogInPage, getProfilePage, logoutUser, postSignUp, postLogIn };

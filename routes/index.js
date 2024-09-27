@@ -13,8 +13,8 @@ router.get('/profile', auth.isAuth, controller.getProfilePage);
 router.get('/newMessage', );
 router.get('/memberSecret', );
 router.get('/adminSecret', )
-router.post('/signup', controller.postSignUpPage);
-router.post('/login', controller.validateLogIn, passport.authenticate('local', { successRedirect: '/', failureRedirect: '/signup' }));
+router.post('/signup', controller.postSignUp);
+router.post('/login', controller.postLogIn);
 router.post('/newMessage',);
 router.post('/memberSecret',);
 router.post('/adminSecret',);
