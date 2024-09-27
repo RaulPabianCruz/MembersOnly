@@ -4,12 +4,14 @@ const controller = require('../controllers/controller');
 
 const router = Router();
 
-router.get('', controller.getHomePage);
+router.get('/', controller.getHomePage);
 router.get('/signup', controller.getSignUpPage);
 router.get('/login', controller.getLogInPage);
-router.get('/newMessage',);
-router.get('/memberSecret',);
-router.get('/adminSecret',)
+router.get('/logout', controller.logoutUser);
+router.get('/profile', );
+router.get('/newMessage', );
+router.get('/memberSecret', );
+router.get('/adminSecret', )
 router.post('/signup', controller.postSignUpPage);
 router.post('/login', controller.validateLogIn, passport.authenticate('local', { successRedirect: '/', failureRedirect: '/signup' }));
 router.post('/newMessage',);

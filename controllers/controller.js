@@ -37,6 +37,14 @@ const getLogInPage = (req, res) => {
     res.render('loginForm', { title: 'Log In' });
 }
 
+const logoutUser = (req, res, next) => {
+    req.logout((err) => {
+        if(err)
+            return next(err);
+        res.redirect('/');
+    });
+}
+
 const postSignUpPage = [
     validateUserInfo,
     asyncHandler(async (req, res)  => {
@@ -59,7 +67,7 @@ const postSignUpPage = [
             res.redirect('/login');
         });
     })
-]
+];
 
 const validateLogIn = [
     validateUserInfo[2],
@@ -74,6 +82,6 @@ const validateLogIn = [
         }
         next();
     }
-]
+];
 
-module.exports = { getHomePage, getSignUpPage, getLogInPage, postSignUpPage, validateLogIn };
+module.exports = { getHomePage, getSignUpPage, getLogInPage, logoutUser, postSignUpPage, validateLogIn };

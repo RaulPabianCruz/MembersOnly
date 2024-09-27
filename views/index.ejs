@@ -5,6 +5,10 @@
     </head>
     <body>
         <h1><%= title %></h1>
+        <% if(locals.currentUser) { %>
+        <a href="/logout">Log Out</a>
+        <% } else { %>
         <a href="/signup">Sign Up!</a>
+        <% } %> 
     </body>
 </html>

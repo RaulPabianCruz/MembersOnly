@@ -24,6 +24,10 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 const assetsPath = path.join(__dirname, 'public')
 app.use(express.static(assetsPath));
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 app.use('/', indexRouter);
 
