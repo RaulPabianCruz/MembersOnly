@@ -37,6 +37,10 @@ const getLogInPage = (req, res) => {
     res.render('loginForm', { title: 'Log In' });
 }
 
+const getProfilePage= (req, res) => {
+    res.render('profile', { title: 'Profile Page'});
+}
+
 const logoutUser = (req, res, next) => {
     req.logout((err) => {
         if(err)
@@ -84,4 +88,4 @@ const validateLogIn = [
     }
 ];
 
-module.exports = { getHomePage, getSignUpPage, getLogInPage, logoutUser, postSignUpPage, validateLogIn };
+module.exports = { getHomePage, getSignUpPage, getLogInPage, getProfilePage, logoutUser, postSignUpPage, validateLogIn };
