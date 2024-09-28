@@ -24,6 +24,20 @@ const validateUserInfo = [
         return value === req.body.password
     }).withMessage('Confirm Password field must match password.')
 ];
+const validateSecrets = [
+    body('memberSecret').trim()
+    .isAlphanumeric().withMessage('Member Secret can only consist of letters and numbers.')
+    .notEmpty().withMessage('Member Secret cannot be empty.')
+    .custom((value) => {
+        return value === process.env.MEMBER_SECRET;
+    }).withMessage('Incorrect Member Secret.'),
+    body('adminSecret').trim()
+    .isAlphanumeric().withMessage('Admin Secret can only consist of letters and numbers.')
+    .notEmpty().withMessage('Admin Secret cannot be emtpy.')
+    .custom((value) => {
+        return value === process.env.ADMIN_SECRET;
+    }).withMessage('Incorrect Admin Secret.')
+];
 
 const getHomePage = (req, res) => {
     res.render('index', { title: 'Home Page' })
@@ -37,8 +51,15 @@ const getLogInPage = (req, res) => {
     res.render('loginForm', { title: 'Log In' });
 }
 
-const getProfilePage= (req, res) => {
+const getProfilePage = (req, res) => {
     res.render('profile', { title: 'Profile Page'});
+}
+
+const getMemberSecretPage = (req, res) => {
+    res.render('secretPage', {
+        title: 'Member Registration',
+        route: 'memberSecret',
+    });
 }
 
 const logoutUser = (req, res, next) => {
@@ -105,4 +126,13 @@ const postLogIn = [
     }
 ];
 
-module.exports = { getHomePage, getSignUpPage, getLogInPage, getProfilePage, logoutUser, postSignUp, postLogIn };
+module.exports = { 
+    getHomePage, 
+    getSignUpPage, 
+    getLogInPage, 
+    getProfilePage,
+    getMemberSecretPage, 
+    logoutUser, 
+    postSignUp, 
+    postLogIn 
+};

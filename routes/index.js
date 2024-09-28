@@ -11,7 +11,7 @@ router.get('/login', controller.getLogInPage);
 router.get('/logout', controller.logoutUser);
 router.get('/profile', auth.isAuth, controller.getProfilePage);
 router.get('/newMessage', );
-router.get('/memberSecret', );
+router.get('/memberSecret', auth.isAuth, controller.getMemberSecretPage);
 router.get('/adminSecret', )
 router.post('/signup', controller.postSignUp);
 router.post('/login', controller.postLogIn);
