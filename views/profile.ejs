@@ -5,5 +5,32 @@
     </head>
     <body>
         <h1><%= title %></h1>
+        <div>
+            <h2>Name:</h2>
+            <p><%= locals.currentUser.firstname %> <%= locals.currentUser.lastname %></p>
+            <h2>Username:</h2>
+            <p><%= locals.currentUser.username %></p>
+            <% if(locals.currentUser.member) { %>
+                <div class="profile status">
+                    <h1>Status:</h1>
+                    <% if(locals.currentUser.member && locals.currentUser.admin) { %>
+                        <p>Admin, Member</p>
+                    <% } else { %>
+                        <p>Member</p>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <div class="profile secret-section">
+                    <div class="member secret">
+                        <a href="/memberSecret">Become a Member!</a>
+                    </div>
+                    <% if(!locals.currentUser.admin) { %>
+                        <div class="admin secret">
+                            <a href="/adminSecret">Become an Admin!</a>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
     </body>
 </html>
