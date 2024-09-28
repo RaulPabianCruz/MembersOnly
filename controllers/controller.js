@@ -62,6 +62,13 @@ const getMemberSecretPage = (req, res) => {
     });
 }
 
+const getAdminSecretPage = (req, res) => {
+    res.render('secretPage', {
+        title: 'Admin Registration',
+        route: 'adminSecret'
+    });
+}
+
 const logoutUser = (req, res, next) => {
     req.logout((err) => {
         if(err)
@@ -147,7 +154,8 @@ module.exports = {
     getSignUpPage, 
     getLogInPage, 
     getProfilePage,
-    getMemberSecretPage, 
+    getMemberSecretPage,
+    getAdminSecretPage,
     logoutUser, 
     postSignUp, 
     postLogIn,

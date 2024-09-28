@@ -12,7 +12,7 @@ router.get('/logout', controller.logoutUser);
 router.get('/profile', auth.isAuth, controller.getProfilePage);
 router.get('/newMessage', );
 router.get('/memberSecret', auth.isAuth, controller.getMemberSecretPage);
-router.get('/adminSecret', )
+router.get('/adminSecret', auth.isAuth, controller.getAdminSecretPage)
 router.post('/signup', controller.postSignUp);
 router.post('/login', controller.postLogIn);
 router.post('/newMessage',);
