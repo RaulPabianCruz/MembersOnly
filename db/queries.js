@@ -18,4 +18,8 @@ async function insertUser(firstName, lastName, username, password) {
     await pool.query('INSERT INTO users (firstname, lastname, username, password, member, admin) VALUES ($1, $2, $3, $4, false, false);', [ firstName, lastName, username, password ]);
 }
 
-module.exports = { getUserByUsername, getUserById, insertUser };
+async function updateMemberStatus(id, value) {
+    await pool.query('UPDATE users SET member = $1 WHERE id = $2', [value, id]);
+}
+
+module.exports = { getUserByUsername, getUserById, insertUser, updateMemberStatus };

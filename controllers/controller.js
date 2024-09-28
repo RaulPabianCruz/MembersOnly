@@ -126,6 +126,22 @@ const postLogIn = [
     }
 ];
 
+const postMemberSecret = [
+    validateSecrets[0],
+    asyncHandler(async (req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).render('secretPage', {
+                title: 'Member Registration',
+                route: 'memberSecret',
+                errors: errors.array()
+            });
+        }
+        await db.updateMemberStatus(req.user.id, true);
+        res.redirect('/profile');
+    })
+]
+
 module.exports = { 
     getHomePage, 
     getSignUpPage, 
@@ -134,5 +150,6 @@ module.exports = {
     getMemberSecretPage, 
     logoutUser, 
     postSignUp, 
-    postLogIn 
+    postLogIn,
+    postMemberSecret,
 };
