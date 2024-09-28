@@ -19,11 +19,14 @@
                         <p>Member</p>
                     <% } %>
                 </div>
-            <% } else { %>
+            <% } %>
+            <% if(!locals.currentUser.member || !locals.currentUser.admin) { %>
                 <div class="profile secret-section">
-                    <div class="member secret">
-                        <a href="/memberSecret">Become a Member!</a>
-                    </div>
+                    <% if(!locals.currentUser.member) { %>
+                        <div class="member secret">
+                            <a href="/memberSecret">Become a Member!</a>
+                        </div>
+                    <% } %>
                     <% if(!locals.currentUser.admin) { %>
                         <div class="admin secret">
                             <a href="/adminSecret">Become an Admin!</a>
