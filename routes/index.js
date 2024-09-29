@@ -17,6 +17,6 @@ router.post('/signup', controller.postSignUp);
 router.post('/login', controller.postLogIn);
 router.post('/newMessage',);
 router.post('/memberSecret', auth.isAuth, controller.postMemberSecret);
-router.post('/adminSecret',);
+router.post('/adminSecret', auth.isAuth, controller.postAdminSecret);
 
 module.exports = router;

@@ -137,17 +137,33 @@ const postMemberSecret = [
     validateSecrets[0],
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
-        if(!errors.isEmpty()){
+        if(!errors.isEmpty()) {
             return res.status(400).render('secretPage', {
                 title: 'Member Registration',
                 route: 'memberSecret',
                 errors: errors.array()
             });
         }
-        await db.updateMemberStatus(req.user.id, true);
+        await db.grantMemberStatus(req.user.id);
         res.redirect('/profile');
     })
-]
+];
+
+const postAdminSecret = [
+    validateSecrets[1],
+    asyncHandler(async (req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).render('secretPage', {
+                title: 'Admin Registration',
+                route: 'adminSecret',
+                errors: errors.array()
+            });
+        }
+        await db.grantAdminStatus(req.user.id);
+        res.redirect('/profile');
+    })
+];
 
 module.exports = { 
     getHomePage, 
@@ -160,4 +176,5 @@ module.exports = {
     postSignUp, 
     postLogIn,
     postMemberSecret,
+    postAdminSecret,
 };
