@@ -1,0 +1,16 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title><%=title%></title>
+    </head>
+    <body>
+        <h1><%=title%></h1>
+        <form action="/newMessage" method="post">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" maxlength="20" required>
+            <label for="text">Enter Your Message:</label>
+            <textarea name="text" id="text" maxlength="250" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>

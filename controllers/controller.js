@@ -69,6 +69,12 @@ const getAdminSecretPage = (req, res) => {
     });
 }
 
+const getNewMessagePage = (req, res) => {
+    res.render('newMessageForm', {
+        title: 'New Message'
+    });
+}
+
 const logoutUser = (req, res, next) => {
     req.logout((err) => {
         if(err)
@@ -172,6 +178,7 @@ module.exports = {
     getProfilePage,
     getMemberSecretPage,
     getAdminSecretPage,
+    getNewMessagePage,
     logoutUser, 
     postSignUp, 
     postLogIn,
