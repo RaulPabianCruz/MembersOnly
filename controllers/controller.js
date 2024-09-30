@@ -1,43 +1,9 @@
-const { body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const asyncHandler = require('express-async-handler');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const validator = require('./validate');
 const db = require('../db/queries');
-
-const alphaErr = ' must only consist of letters.';
-const lengthErr = ' must be between 1 and 15 characters long.';
-const validateUserInfo = [
-    body('firstname').trim()
-    .isAlpha().withMessage('First Name' + alphaErr)
-    .isLength({min: 1, max: 15}).withMessage('First Name' + lengthErr),
-    body('lastname').trim()
-    .isAlpha().withMessage('Last Name' + alphaErr)
-    .isLength({min: 1, max: 25}).withMessage('Last Name must be between 1 and 25 characters long.'),
-    body('username').trim()
-    .isAlphanumeric('en-US', { ignore: '[\s-]' }).withMessage('Username must only consist of numbers, letters, spaces, and hyphens.')
-    .isLength({min: 1, max: 15}).withMessage('Username' + lengthErr),
-    body('password').trim()
-    .isAlphanumeric().withMessage('Password must only consist of letters and numbers')
-    .isLength({min: 1, max: 15}).withMessage('Password' + lengthErr),
-    body('confirm').trim()
-    .custom((value, {req}) => {
-        return value === req.body.password
-    }).withMessage('Confirm Password field must match password.')
-];
-const validateSecrets = [
-    body('memberSecret').trim()
-    .isAlphanumeric().withMessage('Member Secret can only consist of letters and numbers.')
-    .notEmpty().withMessage('Member Secret cannot be empty.')
-    .custom((value) => {
-        return value === process.env.MEMBER_SECRET;
-    }).withMessage('Incorrect Member Secret.'),
-    body('adminSecret').trim()
-    .isAlphanumeric().withMessage('Admin Secret can only consist of letters and numbers.')
-    .notEmpty().withMessage('Admin Secret cannot be emtpy.')
-    .custom((value) => {
-        return value === process.env.ADMIN_SECRET;
-    }).withMessage('Incorrect Admin Secret.')
-];
 
 const getHomePage = (req, res) => {
     res.render('index', { title: 'Home Page' })
@@ -84,7 +50,7 @@ const logoutUser = (req, res, next) => {
 }
 
 const postSignUp = [
-    validateUserInfo,
+    validator.validateUserInfo,
     asyncHandler(async (req, res)  => {
         const firstName = req.body.firstname;
         const lastName = req.body.lastname;
@@ -108,8 +74,7 @@ const postSignUp = [
 ];
 
 const postLogIn = [
-    validateUserInfo[2],
-    validateUserInfo[3],
+    validator.validateLogIn,
     (req, res, next) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
@@ -140,7 +105,7 @@ const postLogIn = [
 ];
 
 const postMemberSecret = [
-    validateSecrets[0],
+    validator.validateMemberSecret,
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
@@ -156,7 +121,7 @@ const postMemberSecret = [
 ];
 
 const postAdminSecret = [
-    validateSecrets[1],
+    validator.validateAdminSecret,
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
@@ -168,6 +133,24 @@ const postAdminSecret = [
         }
         await db.grantAdminStatus(req.user.id);
         res.redirect('/profile');
+    })
+];
+
+const postMessage = [
+    validator.validateMessage,
+    asyncHandler(async (req, res) => {
+        const title = req.body.title;
+        const text = req.body.text;
+
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).render('newMessageForm', {
+                title: 'New Message',
+                errors: errors.array()
+            });
+        }
+        await db.insertUserMessage(req.user.id, title, text);
+        res.redirect('/');
     })
 ];
 
@@ -184,4 +167,5 @@ module.exports = {
     postLogIn,
     postMemberSecret,
     postAdminSecret,
+    postMessage
 };

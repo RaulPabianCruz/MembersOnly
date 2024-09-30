@@ -1,9 +1,5 @@
 const pool = require('./pool');
 
-async function getAllMessages() {
-    
-}
-
 async function getUserByUsername(username) {
     const { rows } = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     return rows[0];
@@ -26,4 +22,8 @@ async function grantAdminStatus(id) {
     await pool.query('UPDATE users SET member = true, admin = true WHERE id = $1', [id])
 }
 
-module.exports = { getUserByUsername, getUserById, insertUser, grantMemberStatus, grantAdminStatus };
+async function insertUserMessage(authorId, title, text) {
+    await pool.query("INSERT INTO messages (authorId, title, text, timestamp) VALUES ($1, $2, $3, 'now')", [authorId, title, text]);
+}
+
+module.exports = { getUserByUsername, getUserById, insertUser, grantMemberStatus, grantAdminStatus, insertUserMessage };
