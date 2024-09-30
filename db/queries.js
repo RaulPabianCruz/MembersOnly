@@ -26,4 +26,24 @@ async function insertUserMessage(authorId, title, text) {
     await pool.query("INSERT INTO messages (authorId, title, text, timestamp) VALUES ($1, $2, $3, 'now')", [authorId, title, text]);
 }
 
-module.exports = { getUserByUsername, getUserById, insertUser, grantMemberStatus, grantAdminStatus, insertUserMessage };
+async function deleteMessage(mssgId) {
+    await pool.query('DELETE FROM messages WHERE id = $1', [mssgId]);
+}
+
+async function getAllMessages() {
+    const { rows } = await pool.query(`SELECT title, text, timestamp, username, messages.id AS mssgId 
+                                        FROM messages INNER JOIN users 
+                                        ON messages.authorId = users.id;`);
+    return rows;
+}
+
+module.exports = { 
+    getUserByUsername, 
+    getUserById, 
+    insertUser, 
+    grantMemberStatus, 
+    grantAdminStatus, 
+    insertUserMessage, 
+    deleteMessage,
+    getAllMessages 
+};

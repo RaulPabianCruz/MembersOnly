@@ -5,13 +5,32 @@
     </head>
     <body>
         <h1><%= title %></h1>
-        <% if(locals.currentUser) { %>
-        <a href="/logout">Log Out</a>
-        <a href="/profile">Profile</a>
-        <a href="/newMessage">New Message</a>
-        <% } else { %>
-        <a href="/signup">Sign Up</a>
-        <a href="/login">Log In</a>
-        <% } %> 
+        <ul>
+            <% messages.forEach((msg) => { %>
+                <li>
+                    <h2><%= msg.title %></h2>
+                    <p><%= msg.text %></p>
+                    <p><%= msg.timestamp %></p>
+                    <% if(locals.currentUser && currentUser.member) { %>
+                        <p><%= msg.username %></p>
+                    <% } %>
+                    <% if(locals.currentUser && currentUser.admin) { %>
+                        <form action="deleteMessage/<%=msg.mssgid%>" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    <% } %>
+                </li>
+            <% }); %>
+        </ul>
+        <div>
+            <% if(locals.currentUser) { %>
+            <a href="/logout">Log Out</a>
+            <a href="/profile">Profile</a>
+            <a href="/newMessage">New Message</a>
+            <% } else { %>
+            <a href="/signup">Sign Up</a>
+            <a href="/login">Log In</a>
+            <% } %> 
+        </div>
     </body>
 </html>

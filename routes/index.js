@@ -18,5 +18,6 @@ router.post('/login', controller.postLogIn);
 router.post('/newMessage', auth.isAuth, controller.postMessage);
 router.post('/memberSecret', auth.isAuth, controller.postMemberSecret);
 router.post('/adminSecret', auth.isAuth, controller.postAdminSecret);
+router.post('/deleteMessage/:messageId', auth.isAdmin, controller.deleteMessage);
 
 module.exports = router;

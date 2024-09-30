@@ -5,9 +5,13 @@ const bcrypt = require('bcryptjs');
 const validator = require('./validate');
 const db = require('../db/queries');
 
-const getHomePage = (req, res) => {
-    res.render('index', { title: 'Home Page' })
-}
+const getHomePage = asyncHandler(async (req, res) => {
+    const messages = await db.getAllMessages();
+    res.render('index', { 
+        title: 'Home Page',
+        messages: messages
+    })
+});
 
 const getSignUpPage = (req, res) => {
     res.render('signupForm', { title: 'Sign Up' });
@@ -154,6 +158,17 @@ const postMessage = [
     })
 ];
 
+const deleteMessage = asyncHandler(async (req, res) => {
+    const messageId = Number(req.params.messageId);
+
+    if(typeof messageId != 'number') {
+        res.status(401).redirect('/');
+    }
+
+    await db.deleteMessage(messageId);
+    res.redirect('/')
+});
+
 module.exports = { 
     getHomePage, 
     getSignUpPage, 
@@ -167,5 +182,6 @@ module.exports = {
     postLogIn,
     postMemberSecret,
     postAdminSecret,
-    postMessage
+    postMessage,
+    deleteMessage
 };
