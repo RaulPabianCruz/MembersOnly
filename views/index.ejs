@@ -2,35 +2,32 @@
     <head>
         <meta charset="UTF-8">
         <title><%= title %></title>
+        <link rel="stylesheet" href="/headerStyles.css">
     </head>
     <body>
-        <h1><%= title %></h1>
-        <ul>
-            <% messages.forEach((msg) => { %>
-                <li>
-                    <h2><%= msg.title %></h2>
-                    <p><%= msg.text %></p>
-                    <p><%= msg.timestamp %></p>
-                    <% if(locals.currentUser && currentUser.member) { %>
-                        <p><%= msg.username %></p>
-                    <% } %>
-                    <% if(locals.currentUser && currentUser.admin) { %>
-                        <form action="deleteMessage/<%=msg.mssgid%>" method="post">
-                            <button type="submit">Delete</button>
-                        </form>
-                    <% } %>
-                </li>
-            <% }); %>
-        </ul>
-        <div>
+        <%- include('./partials/header.ejs') %>
+        <main>
+            <h1><%= title %></h1>
+            <ul>
+                <% messages.forEach((mssg) => { %>
+                    <li>
+                        <h2><%= mssg.title %></h2>
+                        <p><%= mssg.text %></p>
+                        <p><%= mssg.timestamp %></p>
+                        <% if(locals.currentUser && currentUser.member) { %>
+                            <p><%= mssg.username %></p>
+                        <% } %>
+                        <% if(locals.currentUser && currentUser.admin) { %>
+                            <form action="deleteMessage/<%=mssg.mssgid%>" method="post">
+                                <button type="submit">Delete</button>
+                            </form>
+                        <% } %>
+                    </li>
+                <% }); %>
+            </ul>
             <% if(locals.currentUser) { %>
-            <a href="/logout">Log Out</a>
-            <a href="/profile">Profile</a>
-            <a href="/newMessage">New Message</a>
-            <% } else { %>
-            <a href="/signup">Sign Up</a>
-            <a href="/login">Log In</a>
-            <% } %> 
-        </div>
+                <a href="/newMessage">New Message</a>
+            <% } %>
+        </main>
     </body>
 </html>

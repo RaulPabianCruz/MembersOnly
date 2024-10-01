@@ -1,0 +1,66 @@
+html, body, div,
+h1, h2, h3, h4, h5, h6, p,
+a, ul, li, fieldset, form,
+label, legend, footer, header,
+nav {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+:root {
+    font-size: 18px;
+    --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
+}
+
+body {
+    font-family: var(--system-ui);
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 150px 1fr;
+}
+
+header {
+    background-color: bisque;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.header.logo {
+    flex: 1 1 auto;
+}
+
+.logo.text {
+    color: black;
+    font-size: 3rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.profile.link,
+.header.options {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 0 1 auto;
+}
+
+.profile.icon {
+    height: 75px;
+    width: 75px;
+}
+
+.profile.text {
+    font-weight: bold;
+}
+
+.header.options {
+
+}
+

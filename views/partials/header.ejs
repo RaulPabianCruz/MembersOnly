@@ -1,0 +1,18 @@
+<header>
+    <h1 class="header logo">
+        <a href="/" class="logo text">Chat Messager!</a>
+    </h1>
+    <% if(locals.currentUser) { %>
+            <a href="/profile" class="profile link">
+                <img src="/assets/account-circle.svg" class="profile icon">
+                <p class="profile text"><%= currentUser.username %></p>
+            </a>
+        </div>
+    <% } else { %>
+        <div class="header options">
+            <a href="/login" class="log-in link">Log In</a>
+            <p>or</p>
+            <a href="/signup" class="sign-up link">Sign Up</a>
+        </div>
+    <% } %>
+</header>
