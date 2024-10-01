@@ -3,30 +3,37 @@
         <meta charset="UTF-8">
         <title><%= title %></title>
         <link rel="stylesheet" href="/headerStyles.css">
+        <link rel="stylesheet" href="/indexStyles.css">
     </head>
     <body>
         <%- include('./partials/header.ejs') %>
         <main>
-            <h1><%= title %></h1>
-            <ul>
+            <h1 class="index-title"><%= title %></h1>
+            <ul class="message list">
                 <% messages.forEach((mssg) => { %>
-                    <li>
-                        <h2><%= mssg.title %></h2>
-                        <p><%= mssg.text %></p>
-                        <p><%= mssg.timestamp %></p>
-                        <% if(locals.currentUser && currentUser.member) { %>
-                            <p><%= mssg.username %></p>
+                    <li class="message list-item">
+                        <% if(locals.currentUser) { %>
+                            <div class="message secret-container">
+                                <% if(locals.currentUser && currentUser.member) { %>
+                                    <p class="message username info"><%= mssg.username %></p>
+                                <% } %>
+                                <% if(locals.currentUser && currentUser.admin) { %>
+                                    <form action="deleteMessage/<%=mssg.mssgid%>" method="post" class="message form">
+                                        <button type="submit" onClick="return confirm('Are you sure you want to delete this message?')" class="delete-bttn">
+                                            <img src="/assets/delete.svg" class="delete-icon">
+                                        </button>
+                                    </form>
+                                <% } %>
+                            </div>
                         <% } %>
-                        <% if(locals.currentUser && currentUser.admin) { %>
-                            <form action="deleteMessage/<%=mssg.mssgid%>" method="post">
-                                <button type="submit">Delete</button>
-                            </form>
-                        <% } %>
+                        <h2 class="message title info"><%= mssg.title %></h2>
+                        <p class="message text info"><%= mssg.text %></p>
+                        <p class="message timestamp info"><%= mssg.timestamp %></p>
                     </li>
                 <% }); %>
             </ul>
             <% if(locals.currentUser) { %>
-                <a href="/newMessage">New Message</a>
+                <a href="/newMessage" class="new-mssg link">New Message</a>
             <% } %>
         </main>
     </body>

@@ -8,7 +8,7 @@ const db = require('../db/queries');
 const getHomePage = asyncHandler(async (req, res) => {
     const messages = await db.getAllMessages();
     res.render('index', { 
-        title: 'Home Page',
+        title: 'Message Board',
         messages: messages
     })
 });
