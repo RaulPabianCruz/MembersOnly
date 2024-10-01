@@ -4,12 +4,12 @@
         <title><%=title%></title>
         <link rel="stylesheet" href="/headerStyles.css">
         <link rel="stylesheet" href="/newMessageStyles.css">
+        <link rel="stylesheet" href="/errorStyles.css">
     </head>
     <body>
         <%- include('./partials/header.ejs') %>
         <main>
             <h1 class="title"><%=title%></h1>
-            <%- include('./partials/errors.ejs') %>
             <form action="/newMessage" method="post" class="new-mssg form">
                 <label for="title" class="new-mssg label">Title:</label>
                 <input type="text" id="title" name="title" maxlength="20" class="new-mssg input" required>
@@ -17,6 +17,7 @@
                 <textarea name="text" id="text" maxlength="250" class="new-mssg input" rows="5" cols="30" required></textarea>
                 <button type="submit">Submit</button>
             </form>
+            <%- include('./partials/errors.ejs') %>
         </main>
     </body>
 </html>

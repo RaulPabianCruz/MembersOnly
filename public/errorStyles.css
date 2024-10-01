@@ -1,0 +1,10 @@
+.error.list {
+    color: red;
+    padding: 10px;
+    text-align: center;
+    text-decoration: underline;
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 5px;
+}
