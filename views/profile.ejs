@@ -2,38 +2,52 @@
     <head>
         <meta charset="UTF-8">
         <title><%= title %></title>
+        <link rel="stylesheet" href="/headerStyles.css">
+        <link rel="stylesheet" href="/profileStyles.css">
     </head>
     <body>
-        <h1><%= title %></h1>
-        <div>
-            <h2>Name:</h2>
-            <p><%= locals.currentUser.firstname %> <%= locals.currentUser.lastname %></p>
-            <h2>Username:</h2>
-            <p><%= locals.currentUser.username %></p>
-            <% if(locals.currentUser.member) { %>
-                <div class="profile status">
-                    <h1>Status:</h1>
-                    <% if(locals.currentUser.member && locals.currentUser.admin) { %>
-                        <p>Admin, Member</p>
-                    <% } else { %>
-                        <p>Member</p>
-                    <% } %>
+        <%- include('./partials/header.ejs') %>
+        <main>
+            <h1 class="title"><%= title %></h1>
+            <div class="profile container">
+                <div class="profile  heading-section">
+                    <h2 class="profile heading">Name:</h2>
                 </div>
-            <% } %>
-            <% if(!locals.currentUser.member || !locals.currentUser.admin) { %>
-                <div class="profile secret-section">
-                    <% if(!locals.currentUser.member) { %>
-                        <div class="member secret">
-                            <a href="/memberSecret">Become a Member!</a>
-                        </div>
-                    <% } %>
-                    <% if(!locals.currentUser.admin) { %>
-                        <div class="admin secret">
-                            <a href="/adminSecret">Become an Admin!</a>
-                        </div>
-                    <% } %>
+                <div class="profile info-section">
+                    <p class="profile info"><%= locals.currentUser.firstname %> <%= locals.currentUser.lastname %></p>
                 </div>
-            <% } %>
+                <div class="profile heading-section">
+                    <h2 class="profile heading">Username:</h2>
+                </div>
+                <div class="profile info-section">
+                    <p class="profile info"><%= locals.currentUser.username %></p>
+                </div>
+                <% if(locals.currentUser.member) { %>
+                    <div class="profile status-container">
+                        <div class="profile heading-section">
+                            <h1 class="profile heading">Status:</h1>
+                        </div>
+                        <div class="profile info-section">
+                            <% if(locals.currentUser.member && locals.currentUser.admin) { %>
+                                <p class="profile info">Admin, Member</p>
+                            <% } else { %>
+                                <p class="profile info">Member</p>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+                <% if(!locals.currentUser.member || !locals.currentUser.admin) { %>
+                    <div class="profile secret-container">
+                        <% if(!locals.currentUser.member) { %>
+                            <a href="/memberSecret" class="member secret-link">Become a Member!</a>
+                        <% } %>
+                        <% if(!locals.currentUser.admin) { %>
+                            <a href="/adminSecret" class="admin secret-link">Become an Admin!</a>
+                        <% } %>
+                    </div>
+                <% } %>
+                <a href="/logout" class="logout link">Log Out</a>
+            </main>
         </div>
     </body>
 </html>

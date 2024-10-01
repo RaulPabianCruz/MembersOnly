@@ -1,0 +1,73 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+
+.profile.container {
+    width: 450px;
+    font-size: 1.2rem;
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 10px;
+}
+
+.profile.heading-section {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+.profile.info-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+}
+
+.profile.heading {
+    font-weight: bold;
+    grid-column: 2/3;
+}
+
+.profile.info {
+    grid-column: 3/4;
+}
+
+.profile.secret-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+.profile > .secret-link {
+    color: black;
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.profile > .secret-link:hover {
+    box-shadow: 5px 5px rgb(0, 0, 0, .4);
+    transform: scale(1.05);
+}
+
+.profile.status-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 5px;
+}
+
+.logout.link {
+    align-self: center;
+    justify-self: center;
+}
