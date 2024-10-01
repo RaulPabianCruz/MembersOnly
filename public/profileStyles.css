@@ -28,6 +28,7 @@ main {
 }
 
 .profile.info-section {
+    border-bottom: 2px solid black;
     display: grid;
     grid-template-columns: 1fr 1fr 3fr;
 }

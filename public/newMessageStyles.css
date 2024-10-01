@@ -1,0 +1,35 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.new-mssg.form {
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.new-mssg.label {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.new-mssg.input {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.new-mssg.form > button {
+    font-size: 1rem;
+    padding: 5px 15px;
+    align-self: center;
+}

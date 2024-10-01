@@ -2,16 +2,21 @@
     <head>
         <meta charset="UTF-8">
         <title><%=title%></title>
+        <link rel="stylesheet" href="/headerStyles.css">
+        <link rel="stylesheet" href="/newMessageStyles.css">
     </head>
     <body>
-        <h1><%=title%></h1>
-        <%- include('./partials/errors.ejs') %>
-        <form action="/newMessage" method="post">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" maxlength="20" required>
-            <label for="text">Enter Your Message:</label>
-            <textarea name="text" id="text" maxlength="250" required></textarea>
-            <button type="submit">Submit</button>
-        </form>
+        <%- include('./partials/header.ejs') %>
+        <main>
+            <h1 class="title"><%=title%></h1>
+            <%- include('./partials/errors.ejs') %>
+            <form action="/newMessage" method="post" class="new-mssg form">
+                <label for="title" class="new-mssg label">Title:</label>
+                <input type="text" id="title" name="title" maxlength="20" class="new-mssg input" required>
+                <label for="text" class="new-mssg label">Enter Your Message:</label>
+                <textarea name="text" id="text" maxlength="250" class="new-mssg input" rows="5" cols="30" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </main>
     </body>
 </html>
