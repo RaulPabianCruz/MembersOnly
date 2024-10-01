@@ -2,22 +2,27 @@
     <head>
         <meta charset="UTF-8">
         <title><%= title %></title>
+        <link rel="stylesheet" href="/headerStyles.css">
+        <link rel="stylesheet" href="/signupStyles.css">
     </head>
     <body>
-        <h1><%= title %></h1>
-        <%- include('./partials/errors.ejs') %>
-        <form action="signup" method="post">
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" maxlength="15" required>
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" maxlength="25" required>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" maxlength="15" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" maxlength="15" required>
-            <label for="confirm">Confirm Password:</label>
-            <input type="password" id="confirm" name="confirm" maxlength="15" required>
-            <button type="submit">Submit</button>
-        </form>
+        <%- include('./partials/header.ejs') %>
+        <main>
+            <h1 class="title"><%= title %></h1>
+            <form action="signup" method="post" class="signup form">
+                <label for="firstname" class="signup label">First Name:</label>
+                <input type="text" id="firstname" name="firstname" maxlength="15" class="signup input" required>
+                <label for="lastname" class="signup label">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" maxlength="25" class="signup input" required>
+                <label for="username" class="signup label">Username:</label>
+                <input type="text" id="username" name="username" maxlength="15" class="signup input" required>
+                <label for="password" class="signup label">Password:</label>
+                <input type="password" id="password" name="password" maxlength="15" class="signup input" required>
+                <label for="confirm" class="signup label">Confirm Password:</label>
+                <input type="password" id="confirm" name="confirm" maxlength="15" class="signup input" required>
+                <button type="submit">Submit</button>
+            </form>
+            <%- include('./partials/errors.ejs') %>
+        </main>
     </body>
 </html>
