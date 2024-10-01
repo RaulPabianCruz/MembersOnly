@@ -31,7 +31,7 @@ async function deleteMessage(mssgId) {
 }
 
 async function getAllMessages() {
-    const { rows } = await pool.query(`SELECT title, text, timestamp, username, messages.id AS mssgId 
+    const { rows } = await pool.query(`SELECT title, text, to_char(timestamp, 'Mon DD, YYYY  HH:MI AM') AS timestamp, username, messages.id AS mssgId 
                                         FROM messages INNER JOIN users 
                                         ON messages.authorId = users.id;`);
     return rows;
