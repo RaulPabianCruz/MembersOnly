@@ -49,10 +49,10 @@ const validateAdminSecret = [
 
 const validateMessage = [
     body('title').trim()
-    .isAlphanumeric('en-US', {ignore: '[\s-]'}).withMessage('Title' + alphaNumErr2)
+    .isAscii().withMessage('Title must consist of only Ascii characters.')
     .isLength({min: 1, max: 20}).withMessage('Title must be between 1 and 20 characters long.'),
     body('text').trim()
-    .isAlphanumeric('en-US', {ignore: '[\s-]'}).withMessage('Message' + alphaNumErr2)
+    .isAscii().withMessage('Message must consist of only Ascii characters.')
     .isLength({min: 1, max: 250}).withMessage('Message must be between 1 and 250 characters long.')
 ];
 
